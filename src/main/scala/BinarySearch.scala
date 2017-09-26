@@ -15,8 +15,6 @@ object BinarySearch {
 
   def searchAnOrderedList[A : Ordering](orderedList: List[A])
                          (lookingFor: A): Option[A] = {
-    val min = 0
-    val max = orderedList.length - 1
 
     @tailrec
     def looper(min: Int, max: Int): Option[A] = {
@@ -39,7 +37,7 @@ object BinarySearch {
       }
     }
 
-    looper(min, max)
+    looper(0, orderedList.length - 1)
   }
 }
 
