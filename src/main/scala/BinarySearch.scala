@@ -1,6 +1,7 @@
 package csbasics
 
 import Ordered._
+import scala.annotation.tailrec
 
 object BinarySearch {
 
@@ -17,6 +18,7 @@ object BinarySearch {
     val min = 0
     val max = orderedList.length - 1
 
+    @tailrec
     def looper(min: Int, max: Int): Option[A] = {
       if (max < min || max == min) {
         orderedList.lift(min) match {
@@ -26,12 +28,13 @@ object BinarySearch {
       }
       else {
         val guess: Int = (min + max) / 2
-        val guessedSpot: A = orderedList(guess)
 
-        if (guessedSpot == lookingFor) Some(lookingFor)
-        else {
-          if (guessedSpot < lookingFor) looper(guess + 1, max)
-          else looper(min, guess - 1)
+        orderedList.lift(guess) match {
+          case None => looper(min, guess - 1)
+          case Some(x) =>
+            if (x == lookingFor) Some(lookingFor)
+            else if (x < lookingFor) looper(guess + 1, max)
+            else looper(min, guess - 1)
         }
       }
     }
