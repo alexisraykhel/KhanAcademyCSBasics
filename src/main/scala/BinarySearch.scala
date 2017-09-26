@@ -1,5 +1,6 @@
 package csbasics
 
+import Ordered._
 
 object BinarySearch {
 
@@ -11,19 +12,21 @@ object BinarySearch {
 //  Otherwise, the guess was too high. Set max = guess - 1.
 //  Go back to step 2.
 
-  def searchAnOrderedList(orderedList: List[Int])
-                         (lookingFor: Int): Option[Int] = {
+  def searchAnOrderedList[A : Ordering](orderedList: List[A])
+                         (lookingFor: A): Option[A] = {
     val min = 0
     val max = orderedList.length - 1
 
-    val maybeGuess = orderedList.find(_ == lookingFor)
-    val maybeGuessIndex = maybeGuess.map(orderedList.indexOf(_))
-
-    def looper(min: Int, max: Int): Option[Int] = {
-      if (max < min || max == min) Option.empty[Int]
+    def looper(min: Int, max: Int): Option[A] = {
+      if (max < min || max == min) {
+        orderedList.lift(min) match {
+          case None => Option.empty[A]
+          case Some(x) => if (x == lookingFor) Some(x) else Option.empty[A]
+        }
+      }
       else {
         val guess: Int = (min + max) / 2
-        val guessedSpot = orderedList(guess)
+        val guessedSpot: A = orderedList(guess)
 
         if (guessedSpot == lookingFor) Some(lookingFor)
         else {
@@ -35,14 +38,20 @@ object BinarySearch {
 
     looper(min, max)
   }
-
 }
 
 object Main extends App {
 
-  val searchPrep = BinarySearch.searchAnOrderedList(List(1,3,5,7,9,11)) _
+  val searchIntList = BinarySearch.searchAnOrderedList(List(1,3,5,7,9,11)) _
 
-  println(s"Search for 5: ${searchPrep(5)}")
-  println(s"Search for 11: ${searchPrep(11)}")
-  println(s"Search for something not there: ${searchPrep(81)}")
+  println(s"Search for 5: ${searchIntList(5)}")
+  println(s"Search for 11: ${searchIntList(11)}")
+  println(s"Search for something not there: ${searchIntList(81)}")
+
+  val searchWordList = BinarySearch.searchAnOrderedList(
+    List("armadillo", "bat", "cardinal", "dinosaur", "ermine", "fish")) _
+
+  println(s"Search for ermine: ${searchWordList("ermine")}")
+  println(s"Search for bat: ${searchWordList("bat")}")
+  println(s"Search for something not there: ${searchWordList("unicorn")}")
 }
