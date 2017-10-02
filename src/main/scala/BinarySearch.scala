@@ -41,7 +41,7 @@ object BinarySearch {
   }
 }
 
-object Main extends App {
+object BSMain extends App {
 
   val searchIntList = BinarySearch.searchAnOrderedList(List(1,3,5,7,9,11)) _
 
