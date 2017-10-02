@@ -47,12 +47,7 @@ Temporary Items
 .apdisk
 *.xml
 *.iml
-project/plugins.sbt
 *.class
-project/target/config-classes/$0ab74fe6e91c92385b52.cache
 *.cache
-project/target/scala-2.10/sbt-0.13/resolution-cache/default/khanacademycsbasics-build/scala_2.10/sbt_0.13/0.1-SNAPSHOT/resolved.xml.properties
 *.css
-project/target/scala-2.10/sbt-0.13/resolution-cache/reports/ivy-report.xsl
-project/target/streams/$global/dependencyPositions/$global/streams/update_cache_2.10/input_dsp
-project/target/streams/$global/ivyConfiguration/$global/streams/out
+project/target/
